@@ -6,6 +6,9 @@ import {StyleSheet,View,Text, ListView} from 'react-native';
 import {connect} from 'react-redux';
 import {COMMON_BACKGROUND_COLOR,APP_MAIN_COLOR} from '../../comm/Const';
 import {fetchJuheData} from '../../action/DataApi';
+import CommWebView from '../../comm/CommWebView';
+
+import CommonTouchComponent from '../../comm/CommonTouchComponent';
 
 class NewsListView extends Component{
 
@@ -16,12 +19,16 @@ class NewsListView extends Component{
     componentDidMount(){
         this._fetchData();
     }
-
+// <View style={styles.container1}>
+// <Text style={styles.constext} numberOfLines={2}>{newsData.title}</Text>
+// </View>
     _renderItem(newsData){
         return(
-            <View style={styles.container1}>
-                <Text style={styles.constext} numberOfLines={2}>{newsData.title}</Text>
-            </View>
+            <CommonTouchComponent onPress={this._onItemPress.bind(this,newsData)}>
+                <View style={styles.itemViewContainer}>
+                    <Text style={styles.title} numberOfLines={2}>{newsData.title}</Text>
+                </View>
+            </CommonTouchComponent>
         )
     }
 
@@ -40,6 +47,15 @@ class NewsListView extends Component{
     _fetchData(){
         this.props.dispatch(fetchJuheData(0,'top'));
     }
+
+
+    _onItemPress(newsData) {
+        this.props.navigator.push({
+            component: CommWebView,
+            title: newsData.title,
+            url: newsData.url,
+        });
+    }
 }
 
 const styles =  StyleSheet.create({
@@ -52,7 +68,16 @@ const styles =  StyleSheet.create({
     },
     constext:{
         fontSize: 16,marginBottom: 8,color: '#000000',
-    }
+    },
+    itemViewContainer: {
+        padding: 10,
+    },
+    title: {
+        fontSize: 16,
+        marginBottom: 8,
+        color: '#000000',
+    },
+
 })
 
 function select(store){

@@ -38,11 +38,11 @@ class NewsPage extends Component{
                selectedIndex={this.props.selectPageIndex}
                onViewPageScroll={this._onViewPageScroll.bind(this)}
                onSelectedIndexChange={(curPageIndex)=>this._switchTitleBarTab(curPageIndex)}>
-               <NewsListView>
-
+               <NewsListView
+                   navigator = {this.props.navigator}>
                </NewsListView>
-               <NewsListView>
-
+               <NewsListView
+                   navigator = {this.props.navigator}>
                </NewsListView>
            </CommViewPage>
         </View>
