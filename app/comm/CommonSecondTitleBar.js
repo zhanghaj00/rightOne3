@@ -22,11 +22,7 @@ class CommonSecondTitleBar extends Component{
       };
       return(
           <View style={styles.container} >
-            <TouchableHighlight underlayColor={'rgba(0,0,0,0)'}  onPress={this.props.onTabClick}>
-                <View style={styles.headerTabTextContainer}>
-                    <Text style={styles.headerTabsText}>{this.props.tabText}</Text>
-                </View>
-            </TouchableHighlight>
+              {this.props.children}
             <View style={{height: TAB_HEIGHT}} />
             <Animated.View style={[styles.indicatorBase, animatedUnderline]} />
           </View>
@@ -38,6 +34,18 @@ class CommonSecondTitleBar extends Component{
       this.state.leftTabUnderline.setValue(TAB_WIDTH * offset);
     }
 
+}
+class TitleBarItem extends Component{
+
+    render(){
+        return(
+            <TouchableHighlight underlayColor={'rgba(0,0,0,0)'}  onPress={this.props.onTabClick}>
+                <View style={styles.headerTabTextContainer}>
+                    <Text style={styles.headerTabsText}>{this.props.tabText}</Text>
+                </View>
+            </TouchableHighlight>
+        )
+    }
 }
 
 const styles = StyleSheet.create({
@@ -65,4 +73,6 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
 })
+
+CommonSecondTitleBar.TitleBarItem = TitleBarItem;
 export default CommonSecondTitleBar;

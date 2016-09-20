@@ -12,7 +12,7 @@ import {NAVIGATOR_FLAG,NAVIGATOR_TAB} from '../action/types';
 class MainPage extends Component{
 
     constructor(props){
-      super(props)
+      super(props);
 
       this.state = {
         currentTag :NAVIGATOR_TAB.HOME

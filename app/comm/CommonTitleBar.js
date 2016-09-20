@@ -41,6 +41,7 @@ class CommonTitleBar extends Component{
       this.refs.titleBarHeaderTab.onPageScroll(offset);
     }
 
+
     _renderHeaderTabContent() {
         if (typeof this.props.children === 'undefined') {
           return;
@@ -80,5 +81,6 @@ const styles = StyleSheet.create({
 
 
 })
+CommonTitleBar.TitleBarItem =  CommonSecondTitleBar.TitleBarItem;
 
 export default  CommonTitleBar;
