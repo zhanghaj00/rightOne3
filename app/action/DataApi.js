@@ -23,11 +23,11 @@ export function fetchNewsData(pageNo){
         }).done();
 }
 
-export function fetchJuheData(ext,tag){
-    return getNewsData(ext,tag,1);
+export function fetchJuheData(tagname,tag){
+    return getNewsData(tagname,tag,1);
 }
 
-function getNewsData(ext,tag,pageNo){
+function getNewsData(tagname,tag,pageNo){
     return (dispatch) => {
             let reqUrl = `http://v.juhe.cn/toutiao/index?type=${tag}&key=${NEWS_APP_KEY}&page=${pageNo}&limit=${PAGESIZE}`;
             console.log(reqUrl);
@@ -35,7 +35,7 @@ function getNewsData(ext,tag,pageNo){
                 .then((response) => response.json())
                 .then((responseData) => {
                     console.log(responseData);
-                    dispatch({type:TYPES.NEWS_PAGE_STATUS.SUCCESS,dataSource:responseData,tag:tag})
+                    dispatch({type:TYPES.NEWS_PAGE_STATUS.SUCCESS,dataSource:responseData,ext:0,tagFlag:tagname})
                 },(error) => {
                     console.log("error");
                 });

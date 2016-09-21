@@ -11,7 +11,10 @@ export default function selectPageIndex(state = initPageIndex,action){
 
     switch(action.type){
         case TYPES.PAGETITLEBAR_FLAG:
-            return  Object.assign({},state,{selectPageIndex:action.selectPageIndex});
+            return {
+                ...state,
+                selectPageIndex: action.selectPageIndex,
+            };
             break;
         default:
             return state;

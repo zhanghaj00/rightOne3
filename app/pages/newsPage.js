@@ -30,20 +30,55 @@ class NewsPage extends Component{
                 selected={this.props.selectPageIndex == 0}
                 onTabClick={this._switchTitleBarTab.bind(this, 0)} />
             <CommonTitleBar.TitleBarItem
-                tabText="段子"
+                tabText="社会"
                 selected={this.props.selectPageIndex == 1}
                 onTabClick={this._switchTitleBarTab.bind(this, 1)} />
+              <CommonTitleBar.TitleBarItem
+                  tabText="国内"
+                  selected={this.props.selectPageIndex == 2}
+                  onTabClick={this._switchTitleBarTab.bind(this, 2)} />
+              <CommonTitleBar.TitleBarItem
+                  tabText="国际"
+                  selected={this.props.selectPageIndex == 3}
+                  onTabClick={this._switchTitleBarTab.bind(this, 3)} />
+              <CommonTitleBar.TitleBarItem
+                  tabText="娱乐"
+                  selected={this.props.selectPageIndex == 4}
+                  onTabClick={this._switchTitleBarTab.bind(this, 4)} />
+              <CommonTitleBar.TitleBarItem
+                  tabText="体育"
+                  selected={this.props.selectPageIndex == 5}
+                  onTabClick={this._switchTitleBarTab.bind(this, 5)} />
           </CommonTitleBar>
            <CommViewPage
                selectedIndex={this.props.selectPageIndex}
                onViewPageScroll={this._onViewPageScroll.bind(this)}
                onSelectedIndexChange={(curPageIndex)=>this._switchTitleBarTab(curPageIndex)}>
                <NewsListView
-                   navigator = {this.props.navigator}>
-               </NewsListView>
+                   tagName="tag_toutiao"
+                   category="top"
+                   navigator = {this.props.navigator} />
                <NewsListView
-                   navigator = {this.props.navigator}>
-               </NewsListView>
+                   tagName="tag_shehui"
+                   category="shehui"
+                   navigator = {this.props.navigator} />
+               <NewsListView
+                   tagName="tag_guonei"
+                   category="guonei"
+                   navigator = {this.props.navigator} />
+               <NewsListView
+                   tagName="tag_guoji"
+                   category="guoji"
+                   navigator = {this.props.navigator} />
+               <NewsListView
+                   tagName="tag_yule"
+                   category="yule"
+                   navigator = {this.props.navigator} />
+               <NewsListView
+                   tagName="tag_tiyu"
+                   category="tiyu"
+                   navigator = {this.props.navigator} />
+
            </CommViewPage>
         </View>
       );

@@ -13,7 +13,7 @@ class CommWebView extends Component{
         let titleBar = (
             <CommonTitleBar
                 title={this.props.title}
-                onLeftBtnClick={() => this.props.navigator.pop()}
+                onLeftButtonClick={() => this.props.navigator.pop()}
             />
         );
 

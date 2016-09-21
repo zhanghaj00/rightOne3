@@ -2,7 +2,7 @@
  * Created by zhanghao on 2016/9/20.
  */
 import React,{Component} from 'react';
-import {StyleSheet,View,Text, ListView} from 'react-native';
+import {StyleSheet,View,Text, ListView,Image} from 'react-native';
 import {connect} from 'react-redux';
 import {COMMON_BACKGROUND_COLOR,APP_MAIN_COLOR} from '../../comm/Const';
 import {fetchJuheData} from '../../action/DataApi';
@@ -14,19 +14,36 @@ class NewsListView extends Component{
 
     constructor(props){
         super(props);
+        this.category = this.props.category;
+        this.tagName = this.props.tagName;
     }
 
     componentDidMount(){
         this._fetchData();
     }
+
+    shouldComponentUpdate(nextProps) {
+        if (this.tagName !== nextProps.tagFlag) return false;
+        return true;
+    }
+
 // <View style={styles.container1}>
 // <Text style={styles.constext} numberOfLines={2}>{newsData.title}</Text>
 // </View>
     _renderItem(newsData){
         return(
             <CommonTouchComponent onPress={this._onItemPress.bind(this,newsData)}>
-                <View style={styles.itemViewContainer}>
-                    <Text style={styles.title} numberOfLines={2}>{newsData.title}</Text>
+                <View style={{flexDirection:'row'}}>
+                    <View style={{width:80}}>
+                        <Image source={{uri:newsData.thumbnail_pic_s}} style={{width:80, height:80}}/>
+                    </View>
+                    <View style={styles.itemViewContainer}>
+                        <Text style={styles.title} numberOfLines={2}>{newsData.title}</Text>
+                        <View style={styles.line2ItemViewContainer}>
+                        <Text style={styles.author}>{typeof newsData.author_name !== 'undefined' && newsData.author_name !== null ? 'via：' + newsData.author_name : ''}</Text>
+                        <Text style={styles.time}>{newsData.date}</Text>
+                        </View>
+                    </View>
                 </View>
             </CommonTouchComponent>
         )
@@ -39,13 +56,14 @@ class NewsListView extends Component{
                 <ListView
                     dataSource={this.props.dataSource}
                     renderRow={this._renderItem.bind(this)}
+                    renderSeparator={(sectionID, rowID) => <View key={`${sectionID}-${rowID}`} style={styles.separator} />}
                 />
             </View>
         )
     }
 
     _fetchData(){
-        this.props.dispatch(fetchJuheData(0,'top'));
+        this.props.dispatch(fetchJuheData(this.tagName,this.category));
     }
 
 
@@ -70,21 +88,39 @@ const styles =  StyleSheet.create({
         fontSize: 16,marginBottom: 8,color: '#000000',
     },
     itemViewContainer: {
+        flex:1,
         padding: 10,
+    },
+    line2ItemViewContainer: {
+        flexDirection: 'row',
     },
     title: {
         fontSize: 16,
         marginBottom: 8,
         color: '#000000',
     },
-
+    author: {
+        flex: 1,
+        fontSize: 14,
+        color: '#999999',
+    },
+    time: {
+        fontSize: 14,
+        color: '#999999',
+        textAlign: 'right',
+    },
+    separator: {
+        height: 1,
+        backgroundColor: '#cccccc',
+    },
 })
 
 function select(store){
     return{
         status: store.newsDataReducer.status,            //表示数据状态/  初始化/开始/加载失败/加载成功
         dataSource:  store.newsDataReducer.dataSource,       //表示数据源
-        ext:    store.newsDataReducer.ext,            //表示是否是第一页。数据叠加
+        ext:    store.newsDataReducer.ext, //表示是否是第一页。数据叠加
+        tagFlag:store.newsDataReducer.tagFlag,
     }
 }
 

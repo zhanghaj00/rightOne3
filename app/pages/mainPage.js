@@ -1,7 +1,7 @@
 /*带 抽屉的主页面*/
 import React,{Component} from 'react';
 
-import {View,Navigator,Text,DrawerLayoutAndroid ,TouchableNativeFeedback} from 'react-native';
+import {View,Navigator,Text,DrawerLayoutAndroid ,TouchableNativeFeedback, StyleSheet, Platform} from 'react-native';
 import {connect} from 'react-redux';
 
 import GirlPage from './girlPage';
@@ -69,11 +69,11 @@ class MainPage extends Component{
     }
     _renderDrawerLayoutView(){
       return (
-        <View >
-            <View  >
-        <Text >这是一个有味道的地方</Text>
-        <Text >张浩</Text>
-        <Text >主要有新闻，图片，视频。呵呵</Text>
+        <View style={styles.container} >
+            <View  style={styles.drawerHeaderContainer}>
+        <Text style={styles.drawerHeaderText1}>这是一个有味道的地方</Text>
+        <Text style={styles.drawerHeaderText1}>张浩</Text>
+        <Text style={styles.drawerHeaderText1}>主要有新闻，图片，视频。呵呵</Text>
       </View>
       {this._renderDrawerItem(NAVIGATOR_TAB.HOME, '新闻')}
 
@@ -89,8 +89,8 @@ class MainPage extends Component{
     _renderDrawerItem(tab,itemName){
         return(
           <TouchableNativeFeedback onPress={this._ontabSelect.bind(this,tab)}>
-            <View >
-              <Text>{itemName}</Text>
+            <View style={styles.drawerItemContainer}>
+              <Text style={styles.drawerItemText}>{itemName}</Text>
             </View>
           </TouchableNativeFeedback>
         )
@@ -102,6 +102,40 @@ class MainPage extends Component{
     }
 
 }
+
+const styles = StyleSheet.create({
+    container:{
+        flex:1,
+    },
+    drawerHeaderContainer:{
+        height:140,
+        paddingRight:10,
+        paddingLeft:10,
+        backgroundColor:'#8C978B',
+        justifyContent:'center',
+        paddingTop: (Platform.OS === 'android' && Platform.Version < 19) ? 0 : (Platform.OS === 'android' ? 24 : 20),
+    },
+    drawerHeaderText1:{
+        color: '#FFFFFF',
+        fontSize: 18,
+        fontWeight: 'bold',
+        alignSelf: 'center',
+    },
+    drawerItemContainer: {
+        height: 55,
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingLeft: 25,
+    },
+    drawerItemText: {
+        color: '#999999',
+        textAlign: 'center',
+        marginLeft: 10,
+        fontSize: 16,
+        textAlignVertical: 'center',
+    },
+});
+
 
 function select(store){
   return{
