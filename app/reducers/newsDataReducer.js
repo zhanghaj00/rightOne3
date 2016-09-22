@@ -9,6 +9,7 @@ const initialState = {
     dataArray: {}, //存储临时数据
     dataSource:new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}),
     ext:0,
+    isRefreshing:false,
     tagFlag:null,
 }
 export default function newsDataReducer(state = initialState,action){
@@ -20,8 +21,16 @@ export default function newsDataReducer(state = initialState,action){
                 ...state,
                 status:action.type,
                 ext:action.ext,
+                isRefreshing:false,
                 tagFlag:action.tagFlag,
             };
+        case TYPES.NEWS_PAGE_STATUS.START:
+            return{
+                ...state,
+                status:action.type,
+                tagFlag:action.tagFlag,
+                isRefreshing:action.ext === -1,
+            }
         case TYPES.NEWS_PAGE_STATUS.SUCCESS:
             let newContent = action.ext === 2 ? [...state.dataArray,...action.dataSource.result.data]:action.dataSource.result.data;
             return{

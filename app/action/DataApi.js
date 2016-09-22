@@ -28,9 +28,11 @@ export function fetchJuheData(tagname,tag){
 }
 
 function getNewsData(tagname,tag,pageNo){
+
     return (dispatch) => {
             let reqUrl = `http://v.juhe.cn/toutiao/index?type=${tag}&key=${NEWS_APP_KEY}&page=${pageNo}&limit=${PAGESIZE}`;
             console.log(reqUrl);
+            dispatch({type: TYPES.NEWS_PAGE_STATUS.START, ext: -1,tagFlag:tagname});
              fetch(reqUrl)
                 .then((response) => response.json())
                 .then((responseData) => {

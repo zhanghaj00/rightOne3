@@ -7,6 +7,9 @@ import MainPage from './pages/mainPage'
 
 export default class RootPage extends Component{
 
+
+
+
     constructor(props){
       super(props);
     }
@@ -15,7 +18,7 @@ export default class RootPage extends Component{
       BackAndroid.addEventListener('hardwareBackPress',this._onback.bind(this));
     }
 
-    componentWillUnMount(){
+    componentWillUnmount(){
       BackAndroid.removeEventListener('hardwareBackPress',this._onback.bind(this));
     }
 

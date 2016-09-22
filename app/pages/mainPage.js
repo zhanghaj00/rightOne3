@@ -19,6 +19,9 @@ class MainPage extends Component{
       }
       //定义方法
       this.onDrawerOpen = this._onDrawerMenuOpen.bind(this);
+      this.onDrawerClose = this._onDrawerMenuClose.bind(this);
+
+
 
       this.ROUTE_STACKS = [
         {component:NewsPage},
@@ -99,6 +102,12 @@ class MainPage extends Component{
     //打开抽屉
     _onDrawerMenuOpen(){
       this.refs.drawer.openDrawer();
+    }
+
+
+    //关闭抽屉
+    _onDrawerMenuClose(){
+        this.refs.drawer.closeDrawer();
     }
 
 }

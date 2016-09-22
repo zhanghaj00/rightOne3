@@ -16,6 +16,7 @@ class NewsListView extends Component{
         super(props);
         this.category = this.props.category;
         this.tagName = this.props.tagName;
+        this.isRefreshing = this.props.isRefreshing;
     }
 
     componentDidMount(){
@@ -57,11 +58,25 @@ class NewsListView extends Component{
                     dataSource={this.props.dataSource}
                     renderRow={this._renderItem.bind(this)}
                     renderSeparator={(sectionID, rowID) => <View key={`${sectionID}-${rowID}`} style={styles.separator} />}
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={this.state.isRefreshing}
+                            onRefresh={this._onRefresh.bind(this)}
+                            tintColor="#ff0000"
+                            title="下拉刷新"
+                            titleColor="#00ff00"
+                            colors={['#ff0000', '#00ff00', '#0000ff']}
+                            progressBackgroundColor="#ffff00"
+                        />
+                    }
                 />
             </View>
         )
     }
 
+    _onRefresh(){
+        this._fetchData();
+    }
     _fetchData(){
         this.props.dispatch(fetchJuheData(this.tagName,this.category));
     }
@@ -121,6 +136,7 @@ function select(store){
         dataSource:  store.newsDataReducer.dataSource,       //表示数据源
         ext:    store.newsDataReducer.ext, //表示是否是第一页。数据叠加
         tagFlag:store.newsDataReducer.tagFlag,
+        isRefreshing:store.newsDataReducer.isRefreshing,
     }
 }
 
