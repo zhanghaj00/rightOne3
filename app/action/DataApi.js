@@ -43,3 +43,43 @@ function getNewsData(tagname,tag,pageNo){
                 });
     }
 }
+
+export function fetchBlogData(tagname,tag){
+    return getBlogData(tagname,tag,1);
+}
+
+export function publishBlogData(tagname,tag){
+    return getBlogData(tagname,tag,1);
+}
+
+function getBlogData(tagname,tag,pageNo){
+    return (dispatch) => {
+        let reqUrl = `http://strayman.leanapp.cn/bbs/pageBbs?type=${tag}&page=${pageNo}&rows=${PAGESIZE}`;
+        console.log(reqUrl);
+        dispatch({type: TYPES.NEWS_PAGE_STATUS.START, ext: -1,tagFlag:tagname});
+        fetch(reqUrl)
+            .then((response) => response.json())
+            .then((responseData) => {
+                console.log(responseData);
+                dispatch({type:TYPES.NEWS_PAGE_STATUS.SUCCESS,dataSource:responseData,ext:0,tagFlag:tagname})
+            },(error) => {
+                console.log("error");
+            });
+    }
+}
+function pushBlogData(obj){
+    return () => {
+        let reqUrl = `http://v.juhe.cn/toutiao/index?type=${tag}&key=${NEWS_APP_KEY}&page=${pageNo}&limit=${PAGESIZE}`;
+        fetch(reqUrl, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                firstParam: 'yourValue',
+                secondParam: 'yourOtherValue',
+            })
+        })
+    }
+}

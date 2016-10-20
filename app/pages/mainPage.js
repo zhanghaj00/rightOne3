@@ -6,6 +6,7 @@ import {connect} from 'react-redux';
 
 import GirlPage from './girlPage';
 import NewsPage from './newsPage';
+import BlogInputView from './blogInputPage/blogInputView';
 
 import {NAVIGATOR_FLAG,NAVIGATOR_TAB} from '../action/types';
 
@@ -25,7 +26,8 @@ class MainPage extends Component{
 
       this.ROUTE_STACKS = [
         {component:NewsPage},
-        {component:GirlPage}
+        {component:GirlPage},
+        {component:BlogInputView}
       ]
     }
 
@@ -66,6 +68,9 @@ class MainPage extends Component{
               case NAVIGATOR_TAB.GIRL:
                 this.navigator.jumpTo(this.ROUTE_STACKS[1]);
                 break;
+              case NAVIGATOR_TAB.Map:
+                this.navigator.jumpTo(this.ROUTE_STACKS[2]);
+                break;
             }
 
         }
@@ -82,7 +87,7 @@ class MainPage extends Component{
 
       {this._renderDrawerItem(NAVIGATOR_TAB.GIRL, '推荐')}
 
-      {this._renderDrawerItem(NAVIGATOR_TAB.HOME, '妹纸')}
+      {this._renderDrawerItem(NAVIGATOR_TAB.Map, '地图')}
 
       {this._renderDrawerItem(NAVIGATOR_TAB.GIRL, '视频')}
     </View>

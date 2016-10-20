@@ -2,7 +2,7 @@
  * Created by zhanghao on 2016/9/20.
  */
 import React,{Component} from 'react';
-import {StyleSheet,View,Text, ListView,Image} from 'react-native';
+import {StyleSheet,View,Text, ListView,Image,RefreshControl} from 'react-native';
 import {connect} from 'react-redux';
 import {COMMON_BACKGROUND_COLOR,APP_MAIN_COLOR} from '../../comm/Const';
 import {fetchJuheData} from '../../action/DataApi';
@@ -60,7 +60,7 @@ class NewsListView extends Component{
                     renderSeparator={(sectionID, rowID) => <View key={`${sectionID}-${rowID}`} style={styles.separator} />}
                     refreshControl={
                         <RefreshControl
-                            refreshing={this.state.isRefreshing}
+                            refreshing={this.props.isRefreshing}
                             onRefresh={this._onRefresh.bind(this)}
                             tintColor="#ff0000"
                             title="下拉刷新"
