@@ -57,7 +57,8 @@ class CommViewPage extends Component{
             </View>
         ));
     }
-
+    //TODO IOS item 渲染
+    _renderIos(){}
     _renderAndroid(){
         return(
             <ViewPagerAndroid
