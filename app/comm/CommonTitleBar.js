@@ -21,7 +21,7 @@ class CommonTitleBar extends Component{
     }
 
     render(){
-        let titleBarBackgoundRgba = `rgba(156, 151, 139, 1)`;
+        let titleBarBackgoundRgba = this.props.backGroundColor ? this.props.backGroundColor :`rgba(156, 151, 139, 1)`;
       return(
         <View style={[{backgroundColor: titleBarBackgoundRgba},styles.container]}>
           <View style={styles.titleBarContainer}>
