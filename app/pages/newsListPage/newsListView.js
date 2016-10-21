@@ -34,9 +34,9 @@ class NewsListView extends Component{
     _renderItem(newsData){
         return(
             <CommonTouchComponent onPress={this._onItemPress.bind(this,newsData)}>
-                <View style={{flexDirection:'row'}}>
+                <View style={{flexDirection:'row',padding:4}}>
                     <View style={{width:80}}>
-                        <Image source={{uri:newsData.thumbnail_pic_s}} style={{width:80, height:80}}/>
+                        <Image source={{uri:newsData.thumbnail_pic_s}} style={{width:80, height:80, margin:7}}/>
                     </View>
                     <View style={styles.itemViewContainer}>
                         <Text style={styles.title} numberOfLines={2}>{newsData.title}</Text>
@@ -105,6 +105,7 @@ const styles =  StyleSheet.create({
     itemViewContainer: {
         flex:1,
         padding: 10,
+        marginLeft:7,
     },
     line2ItemViewContainer: {
         flexDirection: 'row',

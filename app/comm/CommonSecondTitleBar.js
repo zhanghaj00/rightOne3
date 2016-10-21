@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TouchableHighlight, Animated } from 'react-native';
+import { StyleSheet, View, Text, TouchableHighlight, Animated,Dimensions } from 'react-native';
 import { TITLE_BAR_HEIGHT } from './Const';
 
 
-const TAB_WIDTH = 60;
+const TAB_WIDTH = (Dimensions.get('window').width - TITLE_BAR_HEIGHT)/6;
 const TAB_HEIGHT = 30;
 
 class CommonSecondTitleBar extends Component{

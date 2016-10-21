@@ -40,6 +40,7 @@ export default function newsDataReducer(state = initialState,action){
                 ext:action.ext,
                 status:action.type,
                 tagFlag:action.tagFlag,
+                isRefreshing: false,
             };
         default:
             return state;

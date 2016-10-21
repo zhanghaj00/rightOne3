@@ -37,7 +37,9 @@ class MainPage extends Component{
             ref="drawer"
             drawerWidth={290}
             drawerPosition={DrawerLayoutAndroid.positions.Left}
-            renderNavigationView={this._renderDrawerLayoutView.bind(this)}>
+            renderNavigationView={this._renderDrawerLayoutView.bind(this)}
+            onDrawerOpen={this.onDrawerOpen}
+            onDrawerClose={this.onDrawerClose}>
             <Navigator
                 ref = {component => this.navigator = component}
                 navigator={this.props.navigator}
@@ -57,6 +59,9 @@ class MainPage extends Component{
     }
 
     _ontabSelect(tab){
+
+        this.refs.drawer.closeDrawer();
+
         if(this.props.tab !== tab){
             this.props.dispatch({type:NAVIGATOR_FLAG,tab:tab});
 
