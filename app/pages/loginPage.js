@@ -5,22 +5,38 @@
 import React,{Component} from 'react';
 import {View,Text, StyleSheet, Dimensions, TextInput, Image} from 'react-native';
 import CommonTitleBar from '../comm/CommonTitleBar';
+import {connect} from 'react-redux';
+import * as TYPES from '../action/types'
+import {LoginIn} from '../action/DataApi';
+import CommonTouchComponent from '../comm/CommonTouchComponent';
 
 const BACKGROUND_IMG = require('../img/backgrounds/back.png');
 
 const LOGIN_MARGIN_HIGHT = Dimensions.get('window').height- 210;
 const LOGIN_MARGIN_WIGTH = Dimensions.get('window').width/4;
 
+
+
 class LoginView extends Component{
 
     constructor(props){
         super(props);
         this.state = {
-            name:"用户",
+            username:"用户",
             password:"密码"
         }
     }
 
+    componentWillReceiveProps(nextProps) {
+
+        console.log("nextpros"+nextProps.status);
+        if(nextProps.status === TYPES.LOGIN_STATUS.SUCCESS){
+            //退回
+            //this.props.navigator
+        }else{
+            console.log("denglushibai");
+        }
+    }
     render(){
         return(
             <Image source={BACKGROUND_IMG} style={styles.container}>
@@ -28,20 +44,38 @@ class LoginView extends Component{
                     ref="writeBlog"
                     title='登录页面'
                     onLeftButtonClick={this.props.onDrawerOpen}
-                    isMainPage={true}
+                    isMainPage={false}
                     backGroundColor='rgba(0,0,0,0)'
                 />
                 <View style={styles.loginLayer}>
                     <View style={styles.textView}>
                         <View style={styles.inputView} >
-                            <TextInput style={styles.textInput} numberOfLines={1} underlineColorAndroid="transparent" placeholder ={this.state.name}></TextInput>
+                            <TextInput style={styles.textInput}
+                                       numberOfLines={1}
+                                       underlineColorAndroid="transparent"
+                                       onSubmitEditing={(event) => {
+                                           this.refs.sencondInput.focus();
+                                       }}
+                                       onChangeText={(value)=>{
+                                           this.setState({username:value});
+                                       }}
+                                       placeholder ={this.state.username}></TextInput>
                         </View>
                         <View style={styles.inputView} >
-                            <TextInput style={styles.textInput} numberOfLines={1} underlineColorAndroid="transparent" placeholder ={this.state.password}></TextInput>
+                            <TextInput ref="sencondInput"
+                                       style={styles.textInput}
+                                       numberOfLines={1}
+                                       onChangeText={(text)=>{
+                                           this.setState({password:text});
+                                       }}
+                                       underlineColorAndroid="transparent"
+                                       placeholder ={this.state.password}></TextInput>
                         </View>
                         <View style={styles.submitBtnView} >
+                            <CommonTouchComponent onPress={this._login.bind(this)}>
                             <View style={{flex:1,flexDirection: 'row',justifyContent:'center',
                                 alignItems: 'center'}} ><Text >提交</Text></View>
+                             </CommonTouchComponent>
                         </View>
                     </View>
 
@@ -50,6 +84,15 @@ class LoginView extends Component{
             </Image>
         )
     }
+
+    _login(){
+        var obj = {
+            username:this.state.namename,
+            password:this.state.password
+        }
+        this.props.dispatch(LoginIn(obj));
+    }
+
 }
 
 
@@ -111,5 +154,12 @@ const styles = StyleSheet.create({
         justifyContent:'center',
 
     }
-})
-export default LoginView;
+});
+
+function select(store){
+    return{
+        status:store.LoginReducer.status,
+    }
+}
+
+export default connect(select)(LoginView);

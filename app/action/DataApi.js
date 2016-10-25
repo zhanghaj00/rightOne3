@@ -6,7 +6,7 @@ import * as TYPES from './types';
 const NEWS_APP_KEY="8f08bac949890d31179e20c8dc969f90";
 const PAGESIZE=10;
 
-export function fetchNewsData(pageNo){
+/*export function fetchNewsData(pageNo){
     let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     let url = `http://v.juhe.cn/toutiao/index?type=top&key=&page=1&limit=10`;
     fetch(url)
@@ -21,7 +21,7 @@ export function fetchNewsData(pageNo){
                 dataSource: ds.cloneWithRows([{title:"hello"}, {title:"hello1"},{title:"hello2"},{title:"hello3"},{title:"hello4"}]),
             })
         }).done();
-}
+}*/
 
 export function fetchJuheData(tagname,tag){
     return getNewsData(tagname,tag,1);
@@ -81,5 +81,36 @@ function pushBlogData(obj){
                 secondParam: 'yourOtherValue',
             })
         })
+    }
+}
+
+export function LoginIn(obj){
+    return (dispatch)=>{
+        //let reqUrl = `http://strayman.leanapp.cn/users/Login`;
+        let reqUrl = `http://192.168.10.182:3000/users/Login`;
+        fetch(reqUrl, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            //body: "username="+obj.username+"&password="+obj.password
+            body: JSON.stringify({
+                username: obj.username,
+                password: obj.password,
+            })
+        }).then((response) => response.json())
+            .then((responseData) => {
+
+                console.log(responseData);
+                if(responseData.code === 0){
+                    dispatch({type: TYPES.LOGIN_STATUS.SUCCESS});
+                }else{
+                    dispatch({type: TYPES.LOGIN_STATUS.FAIL});
+                }
+
+            },(error) => {
+                dispatch({type: TYPES.LOGIN_STATUS.FAIL});
+            });
     }
 }

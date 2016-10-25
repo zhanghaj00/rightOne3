@@ -8,6 +8,7 @@ import GirlPage from './girlPage';
 import NewsPage from './newsPage';
 import BlogInputView from './blogInputPage/blogInputView';
 import LoginView from './loginPage';
+import TravelPage from './travelPage';
 
 
 import {NAVIGATOR_FLAG,NAVIGATOR_TAB} from '../action/types';
@@ -30,7 +31,7 @@ class MainPage extends Component{
             {component:NewsPage},
             {component:GirlPage},
             {component:BlogInputView},
-            {component:LoginView}
+            {component:TravelPage}
       ]
     }
 

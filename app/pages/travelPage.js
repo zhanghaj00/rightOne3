@@ -5,6 +5,12 @@
 import React,{Component} from 'react';
 
 import {View,ListView,StyleSheet,Text} from 'react-native';
+import CommonTitleBar from '../comm/CommonTitleBar';
+import LoginView from './loginPage';
+
+
+import {_getLoginUser} from '../store/localStore';
+
 
 class TravelPage extends Component{
 
@@ -15,18 +21,35 @@ class TravelPage extends Component{
     render(){
       return(
         <View style={{flex:1}}>
-          <ListView
-             dataSource={}
-             renderRow={this._renderRow.bind(this)}/>
+                <Text>hello1</Text>
         </View>
       )
     }
 
+    componentWillReceiveProps() {
+        if (!_getLoginUser()) {
+            this.props.navigator.push({
+                component: LoginView,
+            });
+        }
+    }
+
+
     _renderRow(data){
       return(
+
         <View style={{}}>
-          <Image style={{left}}/><View><Text>data.name</Text></View>
+            <CommonTitleBar
+                ref="travelBar"
+                title='旅行'
+                onLeftButtonClick={this.props.onDrawerOpen}
+                isMainPage={true}/>
+            <Image style={{left}}/><View><Text>data.name</Text></View>
         </View>
       )
     }
+
+
 }
+
+export default TravelPage
