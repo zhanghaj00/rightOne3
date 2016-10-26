@@ -10,6 +10,7 @@ import * as TYPES from '../action/types'
 import {LoginIn} from '../action/DataApi';
 import CommonTouchComponent from '../comm/CommonTouchComponent';
 import {_AddLoginUser} from '../store/localStore';
+import {saveLoginUser} from '../db/operation/userLoginHelper';
 import {showToast} from '../comm/CommonToast';
 
 const BACKGROUND_IMG = require('../img/backgrounds/back.png');
@@ -33,7 +34,7 @@ class LoginView extends Component{
         if(nextProps.status === this.props.status) return false;
 
         if(nextProps.status === TYPES.LOGIN_STATUS.SUCCESS){
-            _AddLoginUser(this.state.username);
+            saveLoginUser(this.state.username);
             this.props.navigator.pop();return true;
         }else{
             console.log("denglushibai");

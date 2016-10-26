@@ -10,7 +10,7 @@ import LoginView from './loginPage';
 
 
 import {_getLoginUser} from '../store/localStore';
-
+import {getLoginUser} from '../db/operation/userLoginHelper';
 
 class TravelPage extends Component{
 
@@ -27,7 +27,8 @@ class TravelPage extends Component{
     }
 
     componentWillReceiveProps() {
-        if (!_getLoginUser()) {
+        console.log(getLoginUser());
+        if (!getLoginUser()) {
             this.props.navigator.push({
                 component: LoginView,
             });
