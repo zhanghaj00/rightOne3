@@ -23,6 +23,12 @@ export default function login(state = initNavigator,action){
             status:action.type,
         };
             break;
+        case TYPES.LOGIN_STATUS.PADDING:
+            return{
+                ...state,
+                status:action.type,
+            };
+            break;
         default:
             return state;
     }

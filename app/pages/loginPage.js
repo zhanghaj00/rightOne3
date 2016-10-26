@@ -9,6 +9,8 @@ import {connect} from 'react-redux';
 import * as TYPES from '../action/types'
 import {LoginIn} from '../action/DataApi';
 import CommonTouchComponent from '../comm/CommonTouchComponent';
+import {_AddLoginUser} from '../store/localStore';
+import {showToast} from '../comm/CommonToast';
 
 const BACKGROUND_IMG = require('../img/backgrounds/back.png');
 
@@ -27,15 +29,19 @@ class LoginView extends Component{
         }
     }
 
-    componentWillReceiveProps(nextProps) {
+    shouldComponentUpdate(nextProps,nextState) {
+        if(nextProps.status === this.props.status) return false;
 
-        console.log("nextpros"+nextProps.status);
         if(nextProps.status === TYPES.LOGIN_STATUS.SUCCESS){
-            //退回
-            //this.props.navigator
+            _AddLoginUser(this.state.username);
+            this.props.navigator.pop();return true;
         }else{
             console.log("denglushibai");
+            showToast("用户名密码错误");
+            this.refs.firstInput.focus();
+            return false;
         }
+        return false;
     }
     render(){
         return(
@@ -50,7 +56,8 @@ class LoginView extends Component{
                 <View style={styles.loginLayer}>
                     <View style={styles.textView}>
                         <View style={styles.inputView} >
-                            <TextInput style={styles.textInput}
+                            <TextInput ref="firstInput"
+                                       style={styles.textInput}
                                        numberOfLines={1}
                                        underlineColorAndroid="transparent"
                                        onSubmitEditing={(event) => {
@@ -87,7 +94,7 @@ class LoginView extends Component{
 
     _login(){
         var obj = {
-            username:this.state.namename,
+            username:this.state.username,
             password:this.state.password
         }
         this.props.dispatch(LoginIn(obj));
@@ -159,6 +166,7 @@ const styles = StyleSheet.create({
 function select(store){
     return{
         status:store.LoginReducer.status,
+
     }
 }
 

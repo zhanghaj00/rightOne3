@@ -88,6 +88,7 @@ export function LoginIn(obj){
     return (dispatch)=>{
         //let reqUrl = `http://strayman.leanapp.cn/users/Login`;
         let reqUrl = `http://192.168.10.182:3000/users/Login`;
+        dispatch({type: TYPES.LOGIN_STATUS.PADDING});
         fetch(reqUrl, {
             method: 'POST',
             headers: {

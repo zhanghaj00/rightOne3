@@ -99,9 +99,9 @@ class MainPage extends Component{
 
       {this._renderDrawerItem(NAVIGATOR_TAB.GIRL, '推荐')}
 
-      {this._renderDrawerItem(NAVIGATOR_TAB.Map, '地图')}
+      {this._renderDrawerItem(NAVIGATOR_TAB.Map, '商品价格')}
 
-      {this._renderDrawerItem(NAVIGATOR_TAB.TRAVEL, '登录')}
+      {this._renderDrawerItem(NAVIGATOR_TAB.TRAVEL, '旅行')}
     </View>
       )
     }
