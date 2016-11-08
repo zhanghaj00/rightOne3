@@ -26,7 +26,7 @@ function loadUrl(htmlText){
     };
 
     var $ = cheerio.load(htmlText);
-    let imgBody = $('#slide').find('.J_ping');
+    let imgBody = $('#slide').find('.img');
 
     imgBody.each((i,a)=>{
         let aTag = $(a);
