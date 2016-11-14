@@ -9,6 +9,7 @@ import NewsPage from './newsPage';
 import BlogInputView from './blogInputPage/blogInputView';
 import LoginView from './loginPage';
 import TravelPage from './travelPage';
+import JdPricePage from './jdPricePage';
 
 
 import {NAVIGATOR_FLAG,NAVIGATOR_TAB} from '../action/types';
@@ -31,7 +32,8 @@ class MainPage extends Component{
             {component:NewsPage},
             {component:GirlPage},
             {component:BlogInputView},
-            {component:TravelPage}
+            {component:TravelPage},
+            {component:JdPricePage}
       ]
     }
 
@@ -83,6 +85,9 @@ class MainPage extends Component{
               case NAVIGATOR_TAB.TRAVEL:
                 this.navigator.jumpTo(this.ROUTE_STACKS[3]);
                 break;
+              case NAVIGATOR_TAB.JDPRICE:
+                this.navigator.jumpTo(this.ROUTE_STACKS[4]);
+                break;
             }
 
         }
@@ -102,6 +107,8 @@ class MainPage extends Component{
       {this._renderDrawerItem(NAVIGATOR_TAB.Map, '商品价格')}
 
       {this._renderDrawerItem(NAVIGATOR_TAB.TRAVEL, '旅行')}
+
+      {this._renderDrawerItem(NAVIGATOR_TAB.JDPRICE, '比价')}
     </View>
       )
     }

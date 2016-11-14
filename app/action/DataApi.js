@@ -2,9 +2,11 @@
  * Created by zhanghao on 2016/9/20.
  */
 import * as TYPES from './types';
-
+import cheerio from 'cheerio';
 const NEWS_APP_KEY="8f08bac949890d31179e20c8dc969f90";
 const PAGESIZE=10;
+import {saveJdGoodInfo,fetchUserJdGoodInfo,fetchJdGoodItemInfo} from '../db/operation/jdGoodsHelp';
+
 
 /*export function fetchNewsData(pageNo){
     let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -113,5 +115,85 @@ export function LoginIn(obj){
             },(error) => {
                 dispatch({type: TYPES.LOGIN_STATUS.FAIL});
             });
+    }
+}
+
+export function loadInputJdUrl(urlText){
+
+    let url = `http://m.jd.com/product/1744651.html?resourceType=jdapp_share&resourceValue=CopyURL&utm_source=androidapp&utm_medium=appshare&utm_campaign=t_335139774&utm_term=CopyURL`;
+    fetch(url).then((res)=>res.text()).then((html)=>{
+        loadUrl(html);
+    },(error) => {
+        console.log(error.toString());
+    }).done();
+}
+
+/**
+ * 第一次 获得商品信息的分析方法
+ * @param htmlText
+ * @returns {{userid: string, title: string, skuId: string, img: string, price: string, createTime: string}}
+ */
+function loadUrl(htmlText){
+    var jdGoodInfo ={
+        userid:'',//影片名称
+        title:'',//标题
+        skuId:'',//JD唯一内码
+        img:'',//物品图片
+        price:'',//物品价格
+        createTime:'',//创建时间
+    };
+
+    var $ = cheerio.load(htmlText);
+    let imgBody = $('#slide').find('img');
+
+    imgBody.each((i,a)=>{
+        let aTag = $(a);
+        if(i === 0){
+            jdGoodInfo.title = aTag.attr('alt');
+            jdGoodInfo.img = 'http:'+aTag.attr('src');
+            jdGoodInfo.createTime = Date();
+        }
+    })
+
+    let skuId = $('#detailInfo').attr('report-pageparam');
+    jdGoodInfo.skuId = skuId;
+    //alert(skuId);
+    fetchJdPrice(skuId,(price1)=>{jdGoodInfo.price=price1;saveJdGoodInfo(jdGoodInfo)});
+    /*promis.then((price1)=>{
+        jdGoodInfo.price = price1;
+        alert(price1);
+        saveJdGoodInfo(jdGoodInfo);
+    });*/
+    // promis.then((price)=>{jdGoodInfo.price =price});
+    // alert(jdGoodInfo.price);
+    return jdGoodInfo;
+}
+
+/**
+ * 通过ID 查询价格的方法
+ * @param skuId
+ * @returns {number}
+ */
+function fetchJdPrice(skuId,callback){
+    let url = `https://pm.3.cn/prices/mgets?origin=2&skuIds=` + skuId;
+    //[{"id":"1744651","p":"49.00","m":"52.00","op":"49.00"}]
+      fetch(url).then((res)=>res.json()).then((http)=>{
+        let price =  http[0].p;
+          callback(price);
+    },(error)=>{
+        console.log(error);
+    }).done();
+}
+
+export function fetchJdPriceData(){
+    loadInputJdUrl("1")
+    return (dispatch)=>{
+
+        dispatch({type: TYPES.JD_PRICE_STATUS.START,ext:-1,});
+
+        let data = fetchUserJdGoodInfo("Honda");
+
+        //alert(data[4].goodpic);
+        dispatch({type:TYPES.JD_PRICE_STATUS.SUCCESS,dataSource:data,ext:0})
     }
 }

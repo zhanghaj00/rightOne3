@@ -8,14 +8,14 @@ const JdPriceCollect = {
     properties: {
         username:  'string',
         goodname: 'string',
-        goodkuid:'string',
-        goodpic:"string",
-        items:{type:'list',objectType:'JdPriceItem'}
+        skuId:'string',
+        goodpic:"string"
     }
 };
 const JdPriceItem = {
     name: 'JdPriceItem',
     properties: {
+        skuId: 'string',
         date:     'string',
         price: 'string',
     }

@@ -22,7 +22,21 @@ class CommonTitleBar extends Component{
 
     render(){
         let titleBarBackgoundRgba = this.props.backGroundColor ? this.props.backGroundColor :`rgba(156, 151, 139, 1)`;
-      return(
+        let rightView;
+        if (this.props.rightText) {
+            rightView = (
+                <CommonTouchComponent onPress={this.props.onRightBtnClick}>
+                    <View style={styles.btnContainer}>
+                        <Text style={[styles.titleBarRightText, this.props.rightText.length > 3 && {fontSize: 12}]}>{this.props.rightText}</Text>
+                    </View>
+                </CommonTouchComponent>
+            );
+        } else {
+            rightView = <View style={styles.placeholderView} />;
+        }
+
+
+        return(
         <View style={[{backgroundColor: titleBarBackgoundRgba},styles.container]}>
           <View style={styles.titleBarContainer}>
           <CommonTouchComponent onPress={this.props.onLeftButtonClick}>
@@ -31,6 +45,7 @@ class CommonTitleBar extends Component{
             </View>
           </CommonTouchComponent>
           <Text style={styles.titleBarTitle} numberOfLines={1}>{this.props.title}</Text>
+              {rightView}
         </View>
         {this._renderHeaderTabContent()}
       </View>
@@ -77,8 +92,15 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: 'bold',
     textAlign: Platform.OS === 'android' ? 'left' : 'center',
-  }
-
+  },
+    titleBarRightText: {
+        alignSelf: 'center',
+        color: '#FFFFFF',
+        fontSize: 15,
+    },
+  placeholderView: {
+      width: TITLE_BAR_HEIGHT,
+  },
 
 })
 CommonTitleBar.TitleBarItem =  CommonSecondTitleBar.TitleBarItem;
